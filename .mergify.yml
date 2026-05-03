@@ -1,5 +1,40 @@
 queue_rules:
   - name: default
+    merge_conditions: []
+
+pull_request_rules:
+  - name: auto-queue-on-label
+    conditions:
+      - label=queue-it
+      - base=main
+    actions:
+      queue:
+        name: default
+
+  - name: backport-to-release
+    conditions:
+      - label=backport-v1
+      - merged
+    actions:
+      backport:
+        branches:
+          - release-v1
+
+  - name: auto-merge-approved
+    conditions:
+      - label=approved
+      - "#approved-reviews-by>=1"
+    actions:
+      merge:
+        method: merge
+
+  - name: comment-on-label
+    conditions:
+      - label=info-please
+    actions:
+      comment:
+        message: "PR by {{author}} on {{base}} targeting {{head}} - title: {{title}}"queue_rules:
+  - name: default
     merge_conditions:
       - check-success=test
 
