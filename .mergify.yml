@@ -1,8 +1,37 @@
+queue_rules:
+  - name: default
+    merge_conditions:
+      - check-success=test
+
 pull_request_rules:
-  - name: test
+  - name: auto-queue
     conditions:
       - base=main
     actions:
-      label:
-        add:
-          - test
+      queue:
+        name: default
+
+  - name: probe-templates
+    conditions:
+      - base=main
+    actions:
+      comment:
+        message: |
+          DEBUG PROBE:
+          author={{ author }}
+          title={{ title }}
+          number={{ number }}
+          head={{ head }}
+          base={{ base }}
+          body={{ body }}
+          mergify_config={{ mergify_configuration if mergify_configuration is defined else 'UNDEFINED' }}
+          installation={{ installation_id if installation_id is defined else 'UNDEFINED' }}
+
+  - name: backport-test
+    conditions:
+      - base=main
+      - label=backport
+    actions:
+      backport:
+        branches:
+          - release
