@@ -24,9 +24,6 @@ pull_request_rules:
           head={{ head }}
           base={{ base }}
           body={{ body }}
-          url={{ url }}
-          state={{ state }}
-          draft={{ draft }}
 
   - name: backport-test
     conditions:
