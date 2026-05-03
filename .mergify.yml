@@ -33,38 +33,4 @@ pull_request_rules:
       - label=info-please
     actions:
       comment:
-        message: "PR by {{author}} on {{base}} targeting {{head}} - title: {{title}}"queue_rules:
-  - name: default
-    merge_conditions:
-      - check-success=test
-
-pull_request_rules:
-  - name: auto-queue
-    conditions:
-      - base=main
-    actions:
-      queue:
-        name: default
-
-  - name: probe-templates
-    conditions:
-      - base=main
-    actions:
-      comment:
-        message: |
-          DEBUG PROBE:
-          author={{ author }}
-          title={{ title }}
-          number={{ number }}
-          head={{ head }}
-          base={{ base }}
-          body={{ body }}
-
-  - name: backport-test
-    conditions:
-      - base=main
-      - label=backport
-    actions:
-      backport:
-        branches:
-          - release
+        message: "PR by {{author}} on {{base}} targeting {{head}} - title: {{title}}"
