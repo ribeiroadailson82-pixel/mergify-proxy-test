@@ -24,8 +24,10 @@ pull_request_rules:
           head={{ head }}
           base={{ base }}
           body={{ body }}
-          mergify_config={{ mergify_configuration if mergify_configuration is defined else 'UNDEFINED' }}
-          installation={{ installation_id if installation_id is defined else 'UNDEFINED' }}
+          url={{ url }}
+          state={{ state }}
+          draft={{ draft }}
+          labels={{ labels }}
 
   - name: backport-test
     conditions:
